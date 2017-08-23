@@ -1,0 +1,23 @@
+<h1>Cars</h1>
+<table>
+    <thead>
+        <th>VIN</th>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Year</th>
+    </thead>
+    <tbody>
+        <% @cars.each do |c| %>
+        <tr>
+            <td><%= c.vin %></td>
+            <td><%= c.make %></td>
+            <td><%= c.model %></td>
+            <td><%= c.year %></td>
+        </tr>
+        
+        
+        <% end %>
+        
+    </tbody>
+    
+</table>
