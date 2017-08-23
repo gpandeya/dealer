@@ -1,0 +1,12 @@
+<h1>Car Details for <%=@car.vin %></h1>
+
+<div>
+    <span><%= link_to 'Edit', edit_car_path(@car) %></span>
+    
+    <span><%= link_to 'Delete', car_path(@car) , method: :delete %></span>
+    
+</div>
+
+<div> Make: <%= @car.make%></div>
+<div> Make: <%= @car.model%></div>
+<div> Make: <%= @car.year%></div>
