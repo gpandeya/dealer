@@ -1,0 +1,33 @@
+<h1>Edit Car</h1>
+<%= form_with(url: "/cars/#{@car.id}", model: @car, local: true , method: :patch) do |form| %>  
+        <% if @car.errors.any? %>    
+            <div id="error_explanation">     
+                <h2><%= pluralize(@car.errors.count, "error") %> prohibited this car from being saved:</h2>     
+                
+                <ul>      
+                    <% @car.errors.full_messages.each do |message| %>        
+                        <li><%= message %></li>     
+        <% end %>     
+                </ul>   
+            </div> 
+        <% end %>  
+    <div class="field">   
+        <%= form.label :vin %>
+        <%= form.text_field :vin, id: :car_vin,  value: @car.vin %>  
+    </div> 
+    <div class="field">  
+        <%= form.label :make %>   
+        <%= form.text_field :make, id: :car_make, value: @car.make %>  
+    </div>  
+    <div class="field">   
+        <%= form.label :model %>  
+        <%= form.text_field :model, id: :car_model, value: @car.model%>  
+    </div> 
+    <div class="field">
+        <%= form.label :year %>   
+        <%= form.number_field :year, id: :car_year, value: @car.year%> 
+    </div>  
+    <div class="actions">    
+        <%= form.submit 'Edit Car' %>
+    </div> 
+<% end %>
