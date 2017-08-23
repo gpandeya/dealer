@@ -18,7 +18,18 @@
 #
 
 class Car < ApplicationRecord
+    before_validation :upper_vin, :check_vin
     validates :make, :model, :year, :vin, presence: true
     validates :vin, length: {is: 17}
+    
+    private 
+    
+    def upper_vin
+        self.vin = self.vin.upcase if self.vin
+    end
+    
+      def check_vin
+        self.errors.add(:vin, 'invalid representation') if self.vin && self.vin !~ /^[0-9A-Z]{17}$/
+    end
     
 end
