@@ -1,4 +1,9 @@
 <h1>Cars</h1>
+
+<div>
+    
+    <%= link_to  'New', new_car_path %>
+</div>
 <table>
     <thead>
         <th>VIN</th>
@@ -9,7 +14,7 @@
     <tbody>
         <% @cars.each do |c| %>
         <tr>
-            <td><%= c.vin %></td>
+            <td><%= link_to c.vin,c %></td>
             <td><%= c.make %></td>
             <td><%= c.model %></td>
             <td><%= c.year %></td>
