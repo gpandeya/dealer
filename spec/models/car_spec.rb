@@ -38,6 +38,8 @@ RSpec.describe Car, type: :model do
             expect(c.vin).to eql('0123456789ABCDEFG')
             expect(c.created_at).to_not be_nil
             expect(c.updated_at).to_not be_nil
+            
+            p c
         end
     end
     
@@ -74,6 +76,83 @@ RSpec.describe Car, type: :model do
             expect(c.errors[:vin].first).to eql("invalid representation")
            
         end
+        
+        it 'vin number already taken- will not save' do
+            c= Car.new(make: 'Ford',model: 'Fusion', category: 'car', year: 2015, vin: 'A0000000000000003')
+            c.save
+            expect(c.id).to be_nil
+            expect(c.errors[:vin].first).to eql("has already been taken")
+           
+        end
+        
+        it 'make model and year already taken- will not save' do
+            c= Car.new(make: 'Honda',model: 'Civic', category: 'car', year: 2015, vin: 'A0000000000000004')
+            c.save
+            expect(c.id).to be_nil
+            expect(c.errors[:make].first).to eql("has already been taken")
+           
+        end
+        
+        it 'cylinders must be even' do
+            c= Car.new(make: 'Honda',model: 'Civic', year: 1899, vin: 'A0000000000000004', cylinders: 5)
+            c.save
+            expect(c.id).to be_nil
+            expect(c.errors[:cylinders].first).to eql("must be even")
+           
+        end
+        
+        it 'cylinders must be greater than 4' do
+            c= Car.new(make: 'Honda',model: 'Civic', year: 1899, vin: 'A0000000000000004', cylinders: 2)
+            c.save
+            expect(c.id).to be_nil
+            expect(c.errors[:cylinders].first).to eql("must be greater than or equal to 4")
+           
+        end
+        
+        it 'cylinders must be less than 12' do
+            c= Car.new(make: 'Honda',model: 'Civic', year: 1899, vin: 'A0000000000000004', cylinders: 14)
+            c.save
+            expect(c.id).to be_nil
+            expect(c.errors[:cylinders].first).to eql("must be less than or equal to 12")
+           
+        end
+        
+        it 'cylinders must not contain 10' do
+            c= Car.new(make: 'Honda',model: 'Civic', year: 1899, vin: 'A0000000000000004', cylinders: 10)
+            c.save
+            expect(c.id).to be_nil
+            expect(c.errors[:cylinders].first).to eql("must be other than 10")
+           
+        end
+        
+        it 'year must be greater than or equal to 1900' do
+            c= Car.new(make: 'Honda',model: 'Civic', year: 1899, vin: 'A0000000000000004', cylinders: 4)
+            c.save
+            expect(c.id).to be_nil
+            expect(c.errors[:year].first).to eql("must be greater than or equal to 1900")
+           
+        end
+        
+        it 'year must be less than or equal to 2020' do
+            c= Car.new(make: 'Honda',model: 'Civic', category: 'car', year: 2021, vin: 'A0000000000000004', cylinders: 4)
+            c.save
+            expect(c.id).to be_nil
+            expect(c.errors[:year].first).to eql("must be less than or equal to 2020")
+           
+        end
+        
+        it 'category must be car sport suv truck' do
+            c= Car.new(make: 'Honda',model: 'Civic', category: 'tr', year: 2021, vin: 'A0000000000000004', cylinders: 4)
+            c.save
+            expect(c.id).to be_nil
+            expect(c.errors[:year].first).to eql("must be less than or equal to 2020")
+           
+        end
+        
+        
+        
+        
+        
     end
     
    
